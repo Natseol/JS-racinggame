@@ -3,7 +3,7 @@ let ctx;
 canvas = document.createElement("canvas");
 
 ctx = canvas.getContext("2d");
-canvas.width = 400;
+canvas.width = 600;
 canvas.height = 700;
 document.body.appendChild(canvas);
 
@@ -24,7 +24,7 @@ function car2() {
     this.y =0;
     this.init= function() {
         this.y=0;
-        this.x=generateRandomValue(0, 352);
+        this.x=generateRandomValue(120, 452);
         car2List.push(this);
     }
     this.update=function() {
@@ -38,7 +38,7 @@ function car2() {
 
     this.destroy=function() {
         if(this.y>700){
-            car2List.pop(this);
+            // car2List.pop(this);
         }
     }
 
@@ -54,7 +54,7 @@ function createCar2() {
 
 function loadImage() {
     backgroundImage = new Image();
-    backgroundImage.src="images/road.avif"
+    backgroundImage.src="images/road.png"
 
     carImage = new Image();
     carImage.src="images/car.png"
@@ -120,7 +120,7 @@ function main() {
         requestAnimationFrame(main);
     }
     else {
-        ctx.drawImage(gameoverImage, 100, 150, 200, 200);
+        ctx.drawImage(gameoverImage, 200, 150, 200, 200);
     }
     
 }
