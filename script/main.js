@@ -9,6 +9,7 @@ document.body.appendChild(canvas);
 
 let backgroundImage, carImage, car2Image, gameoverImage;
 let gameover = false;
+let score=0;
 let carX=(canvas.width-48)/2;
 let carY=canvas.height-60;
 
@@ -18,33 +19,33 @@ function generateRandomValue(min, max) {
 }
 
 let car2List=[];
-let car2speed=3; // 내려오는 속도
+let car2speed=1; // 내려오는 속도
 function car2() {
     this.x =0;
     this.y =0;
     this.init= function() {
         this.y=0;
-        this.x=generateRandomValue(120, 452);
+        this.x=generateRandomValue(120, 430);
         car2List.push(this);
     }
     this.update=function() {
         this.y +=car2speed;
     }
     this.checkHit=function() {
-        if (this.y>=carY&&this.x>=carX+4&&this.x<=carX+40) {
+        if (this.y+48>=carY&&this.x>=carX+4&&this.x<=carX+44) {
             gameover=true;
         }
     }
 
     this.destroy=function() {
-        if(this.y>700){
-            // car2List.pop(this);
+        if(this.y>680){
+            car2List.shift(this);
+            score++;
         }
     }
-
 }
 
-let car2generate=300; // 생성되는 속도
+let car2generate=200; // 생성되는 속도
 function createCar2() {
     const interval = setInterval(function() {
         let c = new car2();
@@ -64,7 +65,6 @@ function loadImage() {
 
     gameoverImage = new Image();
     gameoverImage.src="images/gameover.png"
-
 }
 
 let keysDown={};
@@ -87,11 +87,14 @@ function move() {
     if ("ArrowRight" in keysDown) {
         carX += speed;
     }
-    if(carX<=0) {
-        carX=0;
+    if ("ArrowUp" in keysDown) {
+        car2speed=car2speed+0.1;
     }
-    if(carX>=canvas.width-48) {
-       carX=canvas.width-48;
+    if(carX<=120) {
+        carX=120;
+    }
+    if(carX>=430) {
+       carX=430;
     }
 
     for(let i=0; i<car2List.length;i++) {
@@ -107,6 +110,9 @@ function move() {
 function render() {
     ctx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
     ctx.drawImage(carImage, carX, carY);
+    ctx.fillText(`SCORE:${score}`,140,30)
+    ctx.font="20px sans-serif";
+    ctx.fillStyle="red";
 
     for ( let i=0; i<car2List.length; i++) {
         ctx.drawImage(car2Image, car2List[i].x,car2List[i].y);
@@ -122,7 +128,6 @@ function main() {
     else {
         ctx.drawImage(gameoverImage, 200, 150, 200, 200);
     }
-    
 }
 
 loadImage();
