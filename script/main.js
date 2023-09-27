@@ -32,7 +32,7 @@ function car2() {
         this.y +=car2speed;
     }
     this.checkHit=function() {
-        if (this.y+48>=carY&&this.x>=carX+4&&this.x<=carX+44) {
+        if (this.y+44>=carY&&this.y-44<=carY&&this.x>=carX-28&&this.x<=carX+28) {
             gameover=true;
         }
     }
@@ -45,7 +45,7 @@ function car2() {
     }
 }
 
-let car2generate=200; // 생성되는 속도
+let car2generate=250; // 생성되는 속도
 function createCar2() {
     const interval = setInterval(function() {
         let c = new car2();
@@ -79,7 +79,7 @@ function setupKeyboardListener() {
     });
 }
 
-let speed = 2;
+let speed = 3;
 function move() {
     if ("ArrowLeft" in keysDown) {
         carX -= speed;
@@ -110,7 +110,7 @@ function move() {
 function render() {
     ctx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
     ctx.drawImage(carImage, carX, carY);
-    ctx.fillText(`SCORE:${score}`,140,30)
+    ctx.fillText(`SCORE:${score}               SPEED:${Math.ceil(car2speed*10)}km`,140,30)
     ctx.font="20px sans-serif";
     ctx.fillStyle="red";
 
